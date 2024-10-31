@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dream Homes Reality - Luxury Real Estate</title>
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/js/all.min.js"></script>
+</head>
+<body>
+    <header>
+        <nav>
+            <div class="logo">Dream Homes Reality</div>
+            <div class="nav-links">
+                <a href="#" data-page="home">Home</a>
+                <a href="#" data-page="properties">Properties</a>
+                <a href="#" data-page="about">About</a>
+                <a href="#" data-page="contact">Contact</a>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Home Page -->
+        <div id="home" class="page">
+            <div class="hero">
+                <div class="hero-content">
+                    <h1>Find Your Dream Home</h1>
+                    <p>Discover luxury properties in the most desirable locations</p>
+                    <button class="view-all-btn" onclick="navigate('properties')">View All Properties</button>
+                </div>
+            </div>
+
+            <div class="info-section">
+                <h2>Today's Featured Listing</h2>
+                <div id="featured-property"></div>
+
+                <div class="info-cards">
+                    <div class="info-card">
+                        <i class="fas fa-home"></i>
+                        <h3>Luxury Properties</h3>
+                        <p>Specializing in high-end real estate across prime locations</p>
+                    </div>
+                    <div class="info-card">
+                        <i class="fas fa-star"></i>
+                        <h3>Expert Agents</h3>
+                        <p>Professional team with years of industry experience</p>
+                    </div>
+                    <div class="info-card">
+                        <i class="fas fa-handshake"></i>
+                        <h3>Personalized Service</h3>
+                        <p>Tailored approach to meet your specific needs</p>
+                    </div>
+                </div>
+
+                <div class="stats-section">
+                    <div class="stat-item">
+                        <h3>500+</h3>
+                        <p>Properties Sold</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>98%</h3>
+                        <p>Client Satisfaction</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>15+</h3>
+                        <p>Years Experience</p>
+                    </div>
+                    <div class="stat-item">
+                        <h3>24/7</h3>
+                        <p>Support</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Properties Page -->
+        <div id="properties" class="page">
+            <div class="properties-layout">
+                <!-- Filter Section -->
+                <div class="filter-section">
+                    <input type="text" class="search-input" placeholder="Search properties...">
+                    
+                    <h3>Property Type</h3>
+                    <div id="typeFilters" class="property-type-filters">
+                        <button class="filter-btn active" data-filter="all">All Properties</button>
+                        <button class="filter-btn" data-filter="house">Houses</button>
+                        <button class="filter-btn" data-filter="apartment">Apartments</button>
+                        <button class="filter-btn" data-filter="villa">Villas</button>
+                        <button class="filter-btn" data-filter="penthouse">Penthouses</button>
+                    </div>
+                    
+                    <h3>Price Range</h3>
+                    <div class="price-range">
+                        <input type="range" id="minPrice" min="0" max="10000000" step="100000">
+                        <input type="range" id="maxPrice" min="0" max="10000000" step="100000">
+                        <div>$<span id="minPriceDisplay">0</span> - $<span id="maxPriceDisplay">10M</span></div>
+                    </div>
+                    
+                    <h3>Features</h3>
+                    <div class="checkbox-filters">
+                        <label><input type="checkbox" value="pool"> Pool</label>
+                        <label><input type="checkbox" value="garden"> Garden</label>
+                        <label><input type="checkbox" value="garage"> Garage</label>
+                        <label><input type="checkbox" value="waterfront"> Waterfront</label>
+                        <label><input type="checkbox" value="gym"> Gym</label>
+                    </div>
+                    
+                    <h3>Bedrooms</h3>
+                    <div id="bedFilters" class="bedroom-filters">
+                        <button class="filter-btn active" data-beds="any">Any</button>
+                        <button class="filter-btn" data-beds="1">1+</button>
+                        <button class="filter-btn" data-beds="2">2+</button>
+                        <button class="filter-btn" data-beds="3">3+</button>
+                        <button class="filter-btn" data-beds="4">4+</button>
+                        <button class="filter-btn" data-beds="5">5+</button>
+                    </div>
+                </div>
+
+                <!-- Properties Container -->
+                <div class="properties-container">
+                    <div id="properties-grid">
+                        <!-- Properties will be rendered here -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Property Detail Page -->
+        <div id="property-detail" class="page">
+            <div class="property-detail-container">
+                <button class="back-button" onclick="navigate('properties')">
+                    <i class="fas fa-arrow-left"></i> Back to Listings
+                </button>
+                <div id="property-detail-content">
+                    <!-- Property detail content will be inserted here -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <script src="js/properties.js"></script>
+    <script src="js/app.js"></script>
+</body>
+</html>
