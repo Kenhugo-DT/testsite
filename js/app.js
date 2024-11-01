@@ -1,7 +1,7 @@
 // State Management
 const state = {
     currentPage: 'home',
-    currentProperty: 0,
+    currentProperty: null,
     filters: {
         type: 'all',
         minPrice: 0,
@@ -10,6 +10,9 @@ const state = {
         features: new Set()
     }
 };
+
+// Gallery state
+let currentImageIndex = 0;
 
 // Navigation function
 function navigate(pageName) {
@@ -33,30 +36,79 @@ function navigate(pageName) {
     });
 }
 
-// Property Detail View
-function showPropertyDetail(propertyId) {
-    console.log('Showing property detail for ID:', propertyId);
-    
-    // Ensure properties exists and is an array
-    if (!Array.isArray(properties)) {
-        console.error('Properties array is not available');
-        return;
+// Gallery Functions
+function getGalleryHTML(property) {
+    if (!property.images || property.images.length === 0) {
+        return '<div class="no-images">No images available</div>';
     }
 
-    // Find the property and log for debugging
-    const property = properties.find(p => p.id === propertyId);
-    console.log('Found property:', property);
+    return `
+        <div class="main-image-container">
+            <img id="mainImage" src="${property.images[0]}" alt="${property.name}" />
+            ${property.images.length > 1 ? `
+                <button class="gallery-nav prev" onclick="changeImage(-1)">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="gallery-nav next" onclick="changeImage(1)">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            ` : ''}
+        </div>
+        ${property.images.length > 1 ? `
+            <div class="gallery-thumbnails">
+                ${property.images.map((img, index) => `
+                    <div class="thumbnail ${index === 0 ? 'active' : ''}" 
+                        onclick="selectImage(${index})"
+                        style="background-image: url('${img}')">
+                    </div>
+                `).join('')}
+            </div>
+        ` : ''}
+    `;
+}
 
+function changeImage(direction) {
+    if (!state.currentProperty || !state.currentProperty.images) return;
+    
+    currentImageIndex = (currentImageIndex + direction + state.currentProperty.images.length) % state.currentProperty.images.length;
+    
+    const mainImage = document.getElementById('mainImage');
+    if (mainImage) {
+        mainImage.src = state.currentProperty.images[currentImageIndex];
+        
+        // Update thumbnails
+        document.querySelectorAll('.thumbnail').forEach((thumb, index) => {
+            thumb.classList.toggle('active', index === currentImageIndex);
+        });
+    }
+}
+
+function selectImage(index) {
+    if (!state.currentProperty || !state.currentProperty.images) return;
+    
+    currentImageIndex = index;
+    const mainImage = document.getElementById('mainImage');
+    if (mainImage) {
+        mainImage.src = state.currentProperty.images[currentImageIndex];
+        
+        // Update thumbnails
+        document.querySelectorAll('.thumbnail').forEach((thumb, i) => {
+            thumb.classList.toggle('active', i === currentImageIndex);
+        });
+    }
+}
+
+
+// Property Detail View
+function showPropertyDetail(propertyId) {
+    const property = properties.find(p => p.id === propertyId);
     if (!property) {
         console.error('Property not found:', propertyId);
         return;
     }
 
-    // Check if images array exists
-    if (!Array.isArray(property.images)) {
-        console.error('Property images not found:', property);
-        property.images = ['/api/placeholder/800/600']; // Fallback image
-    }
+    state.currentProperty = property;
+    currentImageIndex = 0;
 
     const detailContent = document.getElementById('property-detail-content');
     if (!detailContent) {
@@ -64,106 +116,44 @@ function showPropertyDetail(propertyId) {
         return;
     }
 
-    try {
-        detailContent.innerHTML = `
-            <div class="property-detail-header">
-                <h1>${property.name}</h1>
-                <p class="property-detail-price">$${typeof property.price === 'number' ? property.price.toLocaleString() : property.price}</p>
-                <p class="property-detail-address">${property.address}</p>
-            </div>
+    detailContent.innerHTML = `
+        <div class="property-detail-header">
+            <h1>${property.name}</h1>
+            <p class="property-detail-price">$${property.price.toLocaleString()}</p>
+            <p class="property-detail-address">${property.address}</p>
+        </div>
 
-            <div class="property-detail-images">
-                <div class="gallery-main">
-                    <img src="${property.images[0]}" alt="${property.name}" id="mainImage">
-                    ${property.images.length > 1 ? `
-                        <button class="gallery-nav prev" onclick="changeImage(-1)">
-                            <i class="fas fa-chevron-left"></i>
-                        </button>
-                        <button class="gallery-nav next" onclick="changeImage(1)">
-                            <i class="fas fa-chevron-right"></i>
-                        </button>
-                    ` : ''}
-                </div>
+        <div class="property-detail-images">
+            ${getGalleryHTML(property)}
+        </div>
+
+        <div class="property-detail-info">
+            <div class="property-detail-description">
+                <h2>Description</h2>
+                <p>${property.description}</p>
                 
-                ${property.images.length > 1 ? `
-                    <div class="gallery-thumbnails">
-                        ${property.images.map((img, index) => `
-                            <div class="thumbnail ${index === 0 ? 'active' : ''}" 
-                                onclick="selectImage(${index})"
-                                style="background-image: url('${img}')">
-                            </div>
-                        `).join('')}
-                    </div>
-                ` : ''}
-            </div>
-
-            <div class="property-detail-info">
-                <div class="property-detail-description">
-                    <h2>Description</h2>
-                    <p>${property.description}</p>
-                    
-                    <div class="property-detail-tags">
-                        ${property.tags.map(tag => `
-                            <span class="property-detail-tag">${tag}</span>
-                        `).join('')}
-                    </div>
-                </div>
-
-                <div class="property-detail-features">
-                    <h2>Property Details</h2>
-                    <ul class="feature-list">
-                        <li><i class="fas fa-bed"></i> ${property.beds} Bedrooms</li>
-                        <li><i class="fas fa-bath"></i> ${property.baths} Bathrooms</li>
-                        <li><i class="fas fa-ruler-combined"></i> ${property.sqft.toLocaleString()} sq ft</li>
-                        ${property.features.map(feature => `
-                            <li><i class="fas fa-check"></i> ${feature}</li>
-                        `).join('')}
-                    </ul>
+                <div class="property-detail-tags">
+                    ${property.tags.map(tag => `
+                        <span class="property-detail-tag">${tag}</span>
+                    `).join('')}
                 </div>
             </div>
-        `;
 
-        // Reset current image index
-        currentImageIndex = 0;
-        
-        // Navigate to detail page
-        navigate('property-detail');
-        
-    } catch (error) {
-        console.error('Error rendering property detail:', error);
-    }
-}
+            <div class="property-detail-features">
+                <h2>Property Details</h2>
+                <ul class="feature-list">
+                    <li><i class="fas fa-bed"></i> ${property.beds} Bedrooms</li>
+                    <li><i class="fas fa-bath"></i> ${property.baths} Bathrooms</li>
+                    <li><i class="fas fa-ruler-combined"></i> ${property.sqft.toLocaleString()} sq ft</li>
+                    ${property.features.map(feature => `
+                        <li><i class="fas fa-check"></i> ${feature}</li>
+                    `).join('')}
+                </ul>
+            </div>
+        </div>
+    `;
 
-// Gallery Functions
-let currentImageIndex = 0;
-
-function changeImage(direction) {
-    const property = state.currentProperty;
-    if (!property || !property.images) return;
-    
-    currentImageIndex = (currentImageIndex + direction + property.images.length) % property.images.length;
-    updateGallery();
-}
-
-function selectImage(index) {
-    currentImageIndex = index;
-    updateGallery();
-}
-
-function updateGallery() {
-    const property = state.currentProperty;
-    if (!property || !property.images) return;
-
-    const mainImage = document.getElementById('mainImage');
-    const thumbnails = document.querySelectorAll('.thumbnail');
-    
-    if (mainImage) {
-        mainImage.src = property.images[currentImageIndex];
-    }
-    
-    thumbnails.forEach((thumb, index) => {
-        thumb.classList.toggle('active', index === currentImageIndex);
-    });
+    navigate('property-detail');
 }
 
 // Property Card Creation
@@ -172,21 +162,24 @@ function createPropertyCard(property) {
     card.className = 'property-card';
     
     card.innerHTML = `
-        <h2>${property.name}</h2>
-        <p class="price">$${typeof property.price === 'number' ? property.price.toLocaleString() : property.price}</p>
-        <p class="address">${property.address}</p>
-        <div class="property-details">
-            <span><i class="fas fa-bed"></i> ${property.beds} Beds</span>
-            <span><i class="fas fa-bath"></i> ${property.baths} Baths</span>
-            <span><i class="fas fa-ruler-combined"></i> ${property.sqft.toLocaleString()} sq ft</span>
-        </div>
-        <div class="property-features">
-            ${property.features.map(feature => 
-                `<span><i class="fas fa-check"></i> ${feature}</span>`
-            ).join('')}
-        </div>
-        <div class="property-tags">
-            ${property.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+        <div class="property-card-image" style="background-image: url('${property.images[0]}')"></div>
+        <div class="property-card-content">
+            <h2>${property.name}</h2>
+            <p class="price">$${property.price.toLocaleString()}</p>
+            <p class="address">${property.address}</p>
+            <div class="property-details">
+                <span><i class="fas fa-bed"></i> ${property.beds} Beds</span>
+                <span><i class="fas fa-bath"></i> ${property.baths} Baths</span>
+                <span><i class="fas fa-ruler-combined"></i> ${property.sqft.toLocaleString()} sq ft</span>
+            </div>
+            <div class="property-features">
+                ${property.features.slice(0, 3).map(feature => 
+                    `<span><i class="fas fa-check"></i> ${feature}</span>`
+                ).join('')}
+            </div>
+            <div class="property-tags">
+                ${property.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
+            </div>
         </div>
     `;
     
@@ -214,53 +207,22 @@ function filterProperties() {
     });
 }
 
-// Update the render function
+// Render Properties
 function renderProperties() {
     const propertiesGrid = document.getElementById('properties-grid');
-    if (!propertiesGrid) return;
+    if (!propertiesGrid) {
+        console.error('Properties grid element not found');
+        return;
+    }
 
     propertiesGrid.innerHTML = '';
-    
     const filteredProperties = filterProperties();
+    
     filteredProperties.forEach(property => {
         const card = createPropertyCard(property);
         propertiesGrid.appendChild(card);
     });
-
-    // Create and append property cards
-    properties.forEach(property => {
-        const propertyCard = document.createElement('article');
-        propertyCard.classList.add('property-card');
-        
-        propertyCard.innerHTML = `
-            <h2>${property.name}</h2>
-            <p class="price">$${property.price.toLocaleString()}</p>
-            <p class="address">${property.address}</p>
-            <div class="property-details">
-                <span><i class="fas fa-bed"></i> ${property.beds} Beds</span>
-                <span><i class="fas fa-bath"></i> ${property.baths} Baths</span>
-                <span><i class="fas fa-ruler-combined"></i> ${property.sqft.toLocaleString()} sq ft</span>
-            </div>
-            <div class="property-features">
-                ${property.features.map(feature => 
-                    `<span><i class="fas fa-check"></i> ${feature}</span>`
-                ).join('')}
-            </div>
-            <div class="property-tags">
-                ${property.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}
-            </div>
-        `;
-
-        // Add click event listener to the card
-        propertyCard.addEventListener('click', () => {
-            console.log('Property clicked:', property.id);
-            showPropertyDetail(property.id);
-        });
-
-        propertiesGrid.appendChild(propertyCard);
-    });
 }
-
 
 // Event Listeners
 function initializeEventListeners() {
@@ -294,15 +256,27 @@ function initializeEventListeners() {
             renderProperties();
         });
     });
-}
 
-// Make functions globally available
-window.showPropertyDetail = showPropertyDetail;
-window.changeImage = changeImage;
-window.selectImage = selectImage;
+    // Bedroom Filters
+    document.querySelectorAll('#bedFilters .filter-btn').forEach(btn => {
+        btn.addEventListener('click', () => {
+            document.querySelectorAll('#bedFilters .filter-btn')
+                .forEach(b => b.classList.remove('active'));
+            btn.classList.add('active');
+            state.filters.beds = btn.dataset.beds;
+            renderProperties();
+        });
+    });
+}
 
 // Initialize Application
 document.addEventListener('DOMContentLoaded', () => {
+    // Make functions globally available
+    window.showPropertyDetail = showPropertyDetail;
+    window.changeImage = changeImage;
+    window.selectImage = selectImage;
+    window.navigate = navigate;
+    
     initializeEventListeners();
     navigate('home');
 });
