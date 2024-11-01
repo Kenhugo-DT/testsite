@@ -1,3 +1,5 @@
+const BASE_URL = '/testsite';
+
 // Property Database
 const properties = [
 
@@ -13,14 +15,14 @@ const properties = [
         sqft: 3.200,
         // Add array of images for gallery
         images: [
-            '../public/images/hus1/fasadehus1.png',  // Main image
-            '../public/images/hus1/stuehus1.png',   // Living room
-            '../public/images/hus1/kitchenhus1.png',   // Kitchen
-            '../public/images/hus1/soveromhus1.png',   // Master bedroom
-            '../public/images/hus1/badhus1.png',   // Bathroom
-            '../public/images/hus1/barneromhus1.png',   // Pool
-            '../public/images/hus1/loftstuehus1.png',   // Garden
-            '../public/images/hus1/vinkjellerhus1.png'    // View
+            '../images/hus1/fasadehus1.png',  // Main image
+            '../images/hus1/stuehus1.png',   // Living room
+            '../images/hus1/kitchenhus1.png',   // Kitchen
+            '../images/hus1/soveromhus1.png',   // Master bedroom
+            '../images/hus1/badhus1.png',   // Bathroom
+            '../images/hus1/barneromhus1.png',   // Pool
+            '../images/hus1/loftstuehus1.png',   // Garden
+            '../images/hus1/vinkjellerhus1.png'    // View
         ],
         features: ['waterfront', 'garden', 'views', 'fireplace', 'dock'],
         tags: ['Featured', 'Luxury']
@@ -37,14 +39,14 @@ const properties = [
         baths: 7,
         sqft: 8.200,
         images: [
-            '../public/images/hus2/hus2fasade.png',  // Main image
-            '../public/images/hus2/hus2stue.png',   // Living room
-            '../public/images/hus2/hus2kitchen.png',   // Master bedroom
-            '../public/images/hus2/hus2bad.png',    // View
-            '../public/images/hus2/hus2sov.png',   // Bathroom
-            '../public/images/hus2/hus2cinema.png',   // Pool
-            '../public/images/hus2/hus2gjesterom.png',   // Kitchen
-            '../public/images/hus2/hus2closet.png',   // Garden
+            '../images/hus2/hus2fasade.png',  // Main image
+            '../images/hus2/hus2stue.png',   // Living room
+            '../images/hus2/hus2kitchen.png',   // Master bedroom
+            '../images/hus2/hus2bad.png',    // View
+            '../images/hus2/hus2sov.png',   // Bathroom
+            '../images/hus2/hus2cinema.png',   // Pool
+            '../images/hus2/hus2gjesterom.png',   // Kitchen
+            '../images/hus2/hus2closet.png',   // Garden
         ],
 
         features: ['gym', 'garage', 'home teather', 'pool', 'bar', 'spacious'],
@@ -62,14 +64,14 @@ const properties = [
         baths: 3.5,
         sqft: 3.500,
         images: [
-            '../public/images/hus3/hus3fasade.png',
-            '../public/images/hus3/hus3stue.png',
-            '../public/images/hus3/hus3kitchen.png',
-            '../public/images/hus3/hus3spistestue.png',
-            '../public/images/hus3/hus3sov.png',
-            '../public/images/hus3/hus3barnerom.png',
-            '../public/images/hus3/hus3bad.png',
-            '../public/images/hus3/hus3toalett.png',
+            '../images/hus3/hus3fasade.png',
+            '../images/hus3/hus3stue.png',
+            '../images/hus3/hus3kitchen.png',
+            '../images/hus3/hus3spistestue.png',
+            '../images/hus3/hus3sov.png',
+            '../images/hus3/hus3barnerom.png',
+            '../images/hus3/hus3bad.png',
+            '../images/hus3/hus3toalett.png',
         ],
         features: ['pool', 'garden', 'garage'],
         tags: ['Family']
@@ -86,18 +88,18 @@ const properties = [
         baths: 3,
         sqft: 3.500,
         images: [
-            '../public/images/hus4/hus4fasade.png',  // Main image
-            '../public/images/hus4/hus4stue.png', 
-            '../public/images/hus4/hus4spisestue.png', 
-            '../public/images/hus4/hus4loftstue.png', 
-            '../public/images/hus4/hus4kjellerstue.png', 
-            '../public/images/hus4/hus4hobby.png', 
-            '../public/images/hus4/hus4soverom.png', 
-            '../public/images/hus4/hus4soverom2.png', 
-            '../public/images/hus4/hus4barnerom.png', 
-            '../public/images/hus4/hus4bad.png', 
-            '../public/images/hus4/hus4bad2.png', 
-            '../public/images/hus4/hus4library.png', 
+            '../images/hus4/hus4fasade.png',  // Main image
+            '../images/hus4/hus4stue.png', 
+            '../images/hus4/hus4spisestue.png', 
+            '../images/hus4/hus4loftstue.png', 
+            '../images/hus4/hus4kjellerstue.png', 
+            '../images/hus4/hus4hobby.png', 
+            '../images/hus4/hus4soverom.png', 
+            '../images/hus4/hus4soverom2.png', 
+            '../images/hus4/hus4barnerom.png', 
+            '../images/hus4/hus4bad.png', 
+            '../images/hus4/hus4bad2.png', 
+            '../images/hus4/hus4library.png', 
 
         ],
         features: ['library', 'sauna', 'mountain view', 'library', 'fireplace',],
@@ -115,17 +117,17 @@ const properties = [
         baths: 4,
         sqft: 4.800,
         images: [
-            '../public/images/hus5/hus5fasade.png',  
-            '../public/images/hus5/hus5stue.png',    // View
-            '../public/images/hus5/hus5kitchen.png',    // View
-            '../public/images/hus5/hus5bar.png',    // View
-            '../public/images/hus5/hus5soverom.png',    // View
-            '../public/images/hus5/hus5gjestrom.png',    // View
-            '../public/images/hus5/hus5bad.png',    // View
-            '../public/images/hus5/hus5gjesterom.png',    // View
-            '../public/images/hus5/hus5barnerom.png',    // View
-            '../public/images/hus5/hus5studio.png',    // View
-            '../public/images/hus5/hus5garage.png',    // View
+            '../images/hus5/hus5fasade.png',  
+            '../images/hus5/hus5stue.png',    // View
+            '../images/hus5/hus5kitchen.png',    // View
+            '../images/hus5/hus5bar.png',    // View
+            '../images/hus5/hus5soverom.png',    // View
+            '../images/hus5/hus5gjestrom.png',    // View
+            '../images/hus5/hus5bad.png',    // View
+            '../images/hus5/hus5gjesterom.png',    // View
+            '../images/hus5/hus5barnerom.png',    // View
+            '../images/hus5/hus5studio.png',    // View
+            '../images/hus5/hus5garage.png',    // View
         ],
         features: ['fireplace', 'garage', 'garden', 'view', 'spacious'],
         tags: ['Luxury', 'Featured']
@@ -142,14 +144,14 @@ const properties = [
         baths: 1,
         sqft: 667,
         images: [
-            '../public/images/hus6/hus6fasade.png',
-            '../public/images/hus6/hus6fasade2.png',    // View
-            '../public/images/hus6/hus6stue.png',    // View
-            '../public/images/hus6/hus6kitchen.png',    // View
-            '../public/images/hus6/hus6kitchen2.png',    // View
-            '../public/images/hus6/hus6soverom.png',    // View
-            '../public/images/hus6/hus6bad.png',    // View
-            '../public/images/hus6/hus6bad2.png',    // View
+            '../images/hus6/hus6fasade.png',
+            '../images/hus6/hus6fasade2.png',    // View
+            '../images/hus6/hus6stue.png',    // View
+            '../images/hus6/hus6kitchen.png',    // View
+            '../images/hus6/hus6kitchen2.png',    // View
+            '../images/hus6/hus6soverom.png',    // View
+            '../images/hus6/hus6bad.png',    // View
+            '../images/hus6/hus6bad2.png',    // View
                 // View
         ],
         features: ['modern', 'chill area', 'cool neighbours'],
@@ -167,10 +169,10 @@ const properties = [
         baths: 'every bit of floor',
         sqft: 666,
         images: [
-            '../public/images/hus7/hus7front.png',  // Main image
-            '../public/images/hus7/hus7rear.png',   // Living room
-            '../public/images/hus7/hus7side.png',   // Kitchen
-            '../public/images/hus7/hus7partysvenske.png',   // Master bedroom   
+            '../images/hus7/hus7front.png',  // Main image
+            '../images/hus7/hus7rear.png',   // Living room
+            '../images/hus7/hus7side.png',   // Kitchen
+            '../images/hus7/hus7partysvenske.png',   // Master bedroom   
         ],
         features: ['garden'],
         tags: ['Featured', 'Luxury']
