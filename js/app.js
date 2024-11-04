@@ -42,9 +42,14 @@ function getGalleryHTML(property) {
         return '<div class="no-images">No images available</div>';
     }
 
+    const fallbackImage = '../public/DHRlogo.png'; // Fallback image
+
     return `
         <div class="main-image-container">
-            <img id="mainImage" src="${property.images[0]}" alt="${property.name}" />
+            <img id="mainImage" 
+                src="${property.images[0]}" 
+                alt="${property.name}"
+                onerror="this.src='${fallbackImage}'; this.onerror=null;" />
             ${property.images.length > 1 ? `
                 <button class="gallery-nav prev" onclick="changeImage(-1)">
                     <i class="fas fa-chevron-left"></i>
@@ -58,8 +63,9 @@ function getGalleryHTML(property) {
             <div class="gallery-thumbnails">
                 ${property.images.map((img, index) => `
                     <div class="thumbnail ${index === 0 ? 'active' : ''}" 
-                        onclick="selectImage(${index})"
-                        style="background-image: url('${img}')">
+                         onclick="selectImage(${index})"
+                         style="background-image: url('${img}')"
+                         onerror="this.style.backgroundImage='url(${fallbackImage})';">
                     </div>
                 `).join('')}
             </div>
@@ -88,8 +94,14 @@ function selectImage(index) {
     
     currentImageIndex = index;
     const mainImage = document.getElementById('mainImage');
+    const fallbackImage = '/api/placeholder/800/600';
+    
     if (mainImage) {
         mainImage.src = state.currentProperty.images[currentImageIndex];
+        mainImage.onerror = function() {
+            this.src = fallbackImage;
+            this.onerror = null;
+        };
         
         // Update thumbnails
         document.querySelectorAll('.thumbnail').forEach((thumb, i) => {
