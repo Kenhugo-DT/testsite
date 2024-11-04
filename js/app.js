@@ -5,7 +5,7 @@ const state = {
     filters: {
         type: 'all',
         minPrice: 0,
-        maxPrice: 100000000,
+        maxPrice: 1000000000,
         beds: 'any',
         features: new Set()
     }
@@ -151,10 +151,123 @@ function showPropertyDetail(propertyId) {
                 </ul>
             </div>
         </div>
+
+        <div class="fullscreen-gallery" id="fullscreenGallery">
+            <button class="fullscreen-close" onclick="closeFullscreen()">
+                <i class="fas fa-times"></i>
+            </button>
+            <div class="fullscreen-main">
+                <img src="${property.images[0]}" alt="${property.name}" id="fullscreenImage">
+                <button class="fullscreen-nav fullscreen-prev" onclick="changeFullscreenImage(-1)">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="fullscreen-nav fullscreen-next" onclick="changeFullscreenImage(1)">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+            <div class="fullscreen-thumbnails">
+                ${property.images.map((img, index) => `
+                    <div class="fullscreen-thumbnail ${index === 0 ? 'active' : ''}"
+                        onclick="selectFullscreenImage(${index})"
+                        style="background-image: url('${img}')">
+                    </div>
+                `).join('')}
+            </div>
+        </div>
     `;
+
+    // Add click handlers
+    updateGalleryClickHandlers();
 
     navigate('property-detail');
 }
+
+
+// Add these functions to handle fullscreen gallery
+function openFullscreen() {
+    const property = state.currentProperty;
+    if (!property || !property.images) return;
+
+    const gallery = document.getElementById('fullscreenGallery');
+    if (gallery) {
+        gallery.classList.add('active');
+        // Lock body scroll
+        document.body.style.overflow = 'hidden';
+        // Set current image
+        selectFullscreenImage(currentImageIndex);
+    }
+}
+
+function closeFullscreen() {
+    const gallery = document.getElementById('fullscreenGallery');
+    if (gallery) {
+        gallery.classList.remove('active');
+        // Restore body scroll
+        document.body.style.overflow = '';
+    }
+}
+
+function changeFullscreenImage(direction) {
+    const property = state.currentProperty;
+    if (!property || !property.images) return;
+
+    currentImageIndex = (currentImageIndex + direction + property.images.length) % property.images.length;
+    selectFullscreenImage(currentImageIndex);
+}
+
+function selectFullscreenImage(index) {
+    const property = state.currentProperty;
+    if (!property || !property.images || index >= property.images.length) return;
+
+    currentImageIndex = index;
+    
+    // Update fullscreen image
+    const fullscreenImage = document.getElementById('fullscreenImage');
+    if (fullscreenImage) {
+        fullscreenImage.src = property.images[index];
+    }
+    
+    // Update thumbnails
+    const thumbnails = document.querySelectorAll('.fullscreen-thumbnail');
+    thumbnails.forEach((thumb, i) => {
+        thumb.classList.toggle('active', i === index);
+    });
+}
+
+// Update the gallery thumbnail click handlers in showPropertyDetail
+function updateGalleryClickHandlers() {
+    // Add click handler to main image to open fullscreen
+    const mainImage = document.getElementById('mainImage');
+    if (mainImage) {
+        mainImage.style.cursor = 'pointer';
+        mainImage.addEventListener('click', openFullscreen);
+    }
+
+    // Add click handlers to thumbnails
+    document.querySelectorAll('.thumbnail').forEach((thumb, index) => {
+        thumb.addEventListener('click', () => {
+            selectImage(index);
+        });
+    });
+}
+
+// Add keyboard navigation for fullscreen mode
+document.addEventListener('keydown', (e) => {
+    const gallery = document.getElementById('fullscreenGallery');
+    if (gallery && gallery.classList.contains('active')) {
+        if (e.key === 'Escape') closeFullscreen();
+        if (e.key === 'ArrowLeft') changeFullscreenImage(-1);
+        if (e.key === 'ArrowRight') changeFullscreenImage(1);
+    }
+});
+
+// Make functions globally available
+window.openFullscreen = openFullscreen;
+window.closeFullscreen = closeFullscreen;
+window.changeFullscreenImage = changeFullscreenImage;
+window.selectFullscreenImage = selectFullscreenImage;
+
+
 
 // Property Card Creation
 function createPropertyCard(property) {
@@ -279,4 +392,71 @@ document.addEventListener('DOMContentLoaded', () => {
     
     initializeEventListeners();
     navigate('home');
+});
+
+// Scroll animation observer
+const observerOptions = {
+    root: null,
+    rootMargin: '0px',
+    threshold: 0.1
+};
+
+const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+        if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+        }
+    });
+}, observerOptions);
+
+// Add observer to elements when page loads
+document.addEventListener('DOMContentLoaded', () => {
+    // Observe sections
+    document.querySelectorAll('.about-section').forEach(section => {
+        observer.observe(section);
+    });
+    
+    // Observe expertise items
+    document.querySelectorAll('.expertise-item').forEach(item => {
+        observer.observe(item);
+    });
+});
+
+// Add these functions to your app.js
+function showApplicationForm(jobTitle) {
+    const modal = document.getElementById('application-modal');
+    const jobTitleSpan = document.getElementById('job-title');
+    
+    jobTitleSpan.textContent = jobTitle;
+    modal.style.display = 'block';
+    document.body.style.overflow = 'hidden';
+}
+
+function closeApplicationForm() {
+    const modal = document.getElementById('application-modal');
+    modal.style.display = 'none';
+    document.body.style.overflow = '';
+}
+
+function submitApplication(event) {
+    event.preventDefault();
+    // Add your form submission logic here
+    alert('Application submitted successfully!');
+    closeApplicationForm();
+}
+
+// Add event listeners
+document.addEventListener('DOMContentLoaded', () => {
+    const closeBtn = document.querySelector('.close-modal');
+    if (closeBtn) {
+        closeBtn.addEventListener('click', closeApplicationForm);
+    }
+
+    // Close modal when clicking outside
+    window.addEventListener('click', (e) => {
+        const modal = document.getElementById('application-modal');
+        if (e.target === modal) {
+            closeApplicationForm();
+        }
+    });
 });
