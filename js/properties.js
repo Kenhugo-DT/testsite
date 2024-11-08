@@ -15,14 +15,14 @@ const properties = [
         sqft: 3.200,
         // Add array of images for gallery
         images: [
-            'testsite/blob/main/public/images/hus1/fasadehus1.png',  // Main image
-            '.testsite/blob/main/public/images/hus1/stuehus1.png',   // Living room
-            '../testsite/blob/main/public/images/hus1/kitchenhus1.png',   // Kitchen
-            'testsite/blob/public/images/hus1/soveromhus1.png',   // Master bedroom
-            '.testsite/blob/public/images/hus1/badhus1.png',   // Bathroom
-            '..testsite/blob/public/images/hus1/barneromhus1.png',   // Pool
-            'testsite/main/public/images/hus1/loftstuehus1.png',   // Garden
-            '.testsite/main/public/images/hus1/vinkjellerhus1.png'    // View
+            '/images/hus1/fasadehus1.png',  // Main image
+            '/images/hus1/stuehus1.png',   // Living room
+            '/images/hus1/kitchenhus1.png',   // Kitchen
+            '/images/hus1/soveromhus1.png',   // Master bedroom
+            '/images/hus1/badhus1.png',   // Bathroom
+            '/images/hus1/barneromhus1.png',   // Pool
+            '/images/hus1/loftstuehus1.png',   // Garden
+            '/images/hus1/vinkjellerhus1.png'    // View
         ],
         features: ['waterfront', 'garden', 'views', 'fireplace', 'dock'],
         tags: ['Featured', 'Luxury']
