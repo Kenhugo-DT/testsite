@@ -15,8 +15,8 @@ const properties = [
         sqft: 3.200,
         // Add array of images for gallery
         images: [
-            '/images/hus1/fasadehus1.png',  // Main image
-            '/images/hus1/stuehus1.png',   // Living room
+            '/testsite/images/hus1/fasadehus1.png',  // Main image
+            'images/hus1/stuehus1.png',   // Living room
             '/images/hus1/kitchenhus1.png',   // Kitchen
             '/images/hus1/soveromhus1.png',   // Master bedroom
             '/images/hus1/badhus1.png',   // Bathroom
