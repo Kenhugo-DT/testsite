@@ -1,4 +1,4 @@
-const BASE_URL = '/testsite';
+
 
 // Property Database
 const properties = [
@@ -15,14 +15,14 @@ const properties = [
         sqft: 3.200,
         // Add array of images for gallery
         images: [
-            '../public/images/hus1/fasadehus1.png',  // Main image
-            '../public/images/hus1/stuehus1.png',   // Living room
-            '../public/images/hus1/kitchenhus1.png',   // Kitchen
-            '../public/images/hus1/soveromhus1.png',   // Master bedroom
-            '../public/images/hus1/badhus1.png',   // Bathroom
-            '../public/images/hus1/barneromhus1.png',   // Pool
-            '../public/images/hus1/loftstuehus1.png',   // Garden
-            '../public/images/hus1/vinkjellerhus1.png'    // View
+            'testsite/blob/main/public/images/hus1/fasadehus1.png',  // Main image
+            '.testsite/blob/main/public/images/hus1/stuehus1.png',   // Living room
+            '../testsite/blob/main/public/images/hus1/kitchenhus1.png',   // Kitchen
+            'testsite/blob/public/images/hus1/soveromhus1.png',   // Master bedroom
+            '.testsite/blob/public/images/hus1/badhus1.png',   // Bathroom
+            '..testsite/blob/public/images/hus1/barneromhus1.png',   // Pool
+            'testsite/main/public/images/hus1/loftstuehus1.png',   // Garden
+            '.testsite/main/public/images/hus1/vinkjellerhus1.png'    // View
         ],
         features: ['waterfront', 'garden', 'views', 'fireplace', 'dock'],
         tags: ['Featured', 'Luxury']
@@ -39,12 +39,12 @@ const properties = [
         baths: 7,
         sqft: 8.200,
         images: [
-            '../public/images/hus2/hus2fasade.png',  // Main image
-            '../public/images/hus2/hus2stue.png',   // Living room
-            '../public/images/hus2/hus2kitchen.png',   // Master bedroom
-            '../public/images/hus2/hus2bad.png',    // View
-            '../public/images/hus2/hus2sov.png',   // Bathroom
-            '../public/images/hus2/hus2cinema.png',   // Pool
+            '..testsite/main/public/images/hus2/hus2fasade.png',  // Main image
+            '../testsite/main/public/images/hus2/hus2stue.png',   // Living room
+            'blob/main/public/images/hus2/hus2kitchen.png',   // Master bedroom
+            '.blob/main/public/images/hus2/hus2bad.png',    // View
+            '..blob/main/public/images/hus2/hus2sov.png',   // Bathroom
+            '../blob/main/public/images/hus2/hus2cinema.png',   // Pool
             '../public/images/hus2/hus2gjesterom.png',   // Kitchen
             '../public/images/hus2/hus2closet.png',   // Garden
         ],
