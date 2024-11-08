@@ -169,10 +169,10 @@ const properties = [
         baths: 'every bit of floor',
         sqft: 666,
         images: [
-            '../public/images/hus7/hus7front.png',  // Main image
-            '../public/images/hus7/hus7rear.png',   // Living room
-            '../public/images/hus7/hus7side.png',   // Kitchen
-            '../public/images/hus7/hus7partysvenske.png'   // Master bedroom   
+            'images/hus7/hus7front.png',  // Main image
+            'images/hus7/hus7rear.png',   // Living room
+            'images/hus7/hus7side.png',   // Kitchen
+            'images/hus7/hus7partysvenske.png'   // Master bedroom   
         ],
         features: ['garden'],
         tags: ['Featured', 'Luxury']
