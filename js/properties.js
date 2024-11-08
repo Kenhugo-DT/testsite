@@ -46,7 +46,7 @@ const properties = [
             'images/hus2/hus2sov.png',   // Bathroom
             'images/hus2/hus2cinema.png',   // Pool
             'images/hus2/hus2gjesterom.png',   // Kitchen
-            'images/hus2/hus2closet.png',   // Garden
+            'images/hus2/hus2closet.png'   // Garden
         ],
 
         features: ['gym', 'garage', 'home teather', 'pool', 'bar', 'spacious'],
@@ -71,7 +71,7 @@ const properties = [
             'images/hus3/hus3sov.png',
             'images/hus3/hus3barnerom.png',
             'images/hus3/hus3bad.png',
-            'images/hus3/hus3toalett.png',
+            'images/hus3/hus3toalett.png'
         ],
         features: ['pool', 'garden', 'garage'],
         tags: ['Family']
@@ -99,7 +99,7 @@ const properties = [
             'images/hus4/hus4barnerom.png', 
             'images/hus4/hus4bad.png', 
             'images/hus4/hus4bad2.png', 
-            'images/hus4/hus4library.png', 
+            'images/hus4/hus4library.png' 
 
         ],
         features: ['library', 'sauna', 'mountain view', 'library', 'fireplace',],
@@ -127,7 +127,7 @@ const properties = [
             'images/hus5/hus5gjesterom.png',    // View
             'images/hus5/hus5barnerom.png',    // View
             'images/hus5/hus5studio.png',    // View
-            'images/hus5/hus5garage.png',    // View
+            'images/hus5/hus5garage.png'    // View
         ],
         features: ['fireplace', 'garage', 'garden', 'view', 'spacious'],
         tags: ['Luxury', 'Featured']
@@ -151,7 +151,7 @@ const properties = [
             'images/hus6/hus6kitchen2.png',    // View
             'images/hus6/hus6soverom.png',    // View
             'images/hus6/hus6bad.png',    // View
-            'images/hus6/hus6bad2.png',    // View
+            'images/hus6/hus6bad2.png'    // View
                 // View
         ],
         features: ['modern', 'chill area', 'cool neighbours'],
@@ -172,7 +172,7 @@ const properties = [
             '../public/images/hus7/hus7front.png',  // Main image
             '../public/images/hus7/hus7rear.png',   // Living room
             '../public/images/hus7/hus7side.png',   // Kitchen
-            '../public/images/hus7/hus7partysvenske.png',   // Master bedroom   
+            '../public/images/hus7/hus7partysvenske.png'   // Master bedroom   
         ],
         features: ['garden'],
         tags: ['Featured', 'Luxury']
@@ -198,7 +198,7 @@ properties.forEach(property => {
 
     // Validate image paths
     if (!Array.isArray(property.images)) {
-        property.images = property.images ? [property.images] : ['/api/placeholder/800/600'];
+        property.images = property.images ? [property.images] : ['../public/DHRlogo.png'];
     }
 });
 
